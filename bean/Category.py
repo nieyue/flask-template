@@ -1,4 +1,4 @@
-from __init__ import db
+from db_config import db
 
 class Category(db.Model):
     __tablename__ = 'category_tb'

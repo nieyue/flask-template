@@ -1,32 +1,25 @@
-from __init__ import db
-
+from db_config import db
+"""
+用户
+"""
 class User(db.Model):
-    __tablename__ = 'user_tb'
-    id = db.Column(db.Integer,primary_key=True)
-    user_name = db.Column(db.String(10),unique=True)
-    password = db.Column(db.String(16))
+    __tablename__ = 'users'
+    id = db.Column(db.String(45),primary_key=True)
+    username = db.Column(db.String(255))
+    password = db.Column(db.String(255))
+#会在 SQLAlchemy 中创建一个虚拟的列，该列会与 Post.user_id (db.ForeignKey) 建立联系。这一切都交由 SQLAlchemy 自身管理
+    posts = db.relationship(
+        'Post',
+        #用于指定表之间的双向关系，如果在一对多的关系中建立双向的关系，这样的话在对方看来这就是一个多对一的关系
+        backref='users',
+        #指定 SQLAlchemy 加载关联对象的方式，lazy=subquery: 会在加载 Post 对象后，将与 Post 相关联的对象全部加载
+        lazy='dynamic')
 
-    def __init__(self,id,user_name,password):
+    def __init__(self, id, username, password):
         self.id = id
-        self.user_name = user_name
+        self.username = username
         self.password = password
-    def __repr__(self):
-        return '<User %r>' % self.user_name
 
-#db.create_all()
-try:
-    #增加
-    # user1=User(id=4,user_name='sdf4',password='123556')
-    # aa=db.session.add(user1)
-    # db.session.commit()
-    #查询
-    users = User.query.all()
-    print(users)
-    #修改
-    a=User.query.filter_by(user_name='sdf').update({'password':'123456'})
-    db.session.commit()
-    #删除
-    User.query.filter_by(user_name='sdf').delete()
-    db.session.commit()
-except Exception:
-    raise RuntimeError('第三方撒的发')
+    def __repr__(self):
+        return '<Model User `{}`>'.format(self.username)
+
