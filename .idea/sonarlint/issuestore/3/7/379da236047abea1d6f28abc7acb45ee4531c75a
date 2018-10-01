@@ -1,0 +1,5 @@
+
+4python:S125"Remove this commented out code.(λΠ
+bpython:S100"NRename method "getJson" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(κό―U
+jpython:S100"PRename method "getResult" to match the regular expression ^[a-z_][a-z0-9_]{2,}$.(¶θψÿÿÿÿÿ
+dpython:S117"PRename this parameter "User" to match the regular expression ^[_a-z][a-z0-9_]*$.(κό―U
